@@ -5,9 +5,9 @@ module.exports = async function ({ getNamedAccounts, deployments}) {
     const {deploy, log} = deployments
     const {deployer} = await get getNamedAccounts()
 
-    if (developmentChains.includes(network.name)) {
+    /*if (developmentChains.includes(network.name)) {
 
-    }
+    }*/
 
 
     const raffle = await deploy("Raffle", {
