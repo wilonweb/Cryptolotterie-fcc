@@ -11,7 +11,7 @@ pragma solidity ^0.8.9;
 
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
-import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/AutomationCompatibleInterface.sol";
 
 error Raffle__NotEnoughETHEntered();
 error Raffle__TransferFailed();
@@ -24,7 +24,7 @@ error Raffle__UpkeepNotNeeded(uint256 currentBalance, uint256 numPlayers, uint25
  * @dev This implements Chainlink VRF v2 and Chainlink Keepers
  */
 
-contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
+contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
     /* Type déclaration */
     enum RaffleState {
         OPEN,
@@ -96,14 +96,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
      */
     function checkUpkeep(
         bytes memory /* checkData */
-    )
-        public
-        override
-        returns (
-            bool upkeepNeeded,
-            bytes memory /* performData */
-        )
-    {
+    ) public override returns (bool upkeepNeeded, bytes memory /* performData */) {
         bool isOpen = (RaffleState.OPEN == s_raffleState);
         bool timePassed = ((block.timestamp - s_lastTimeStamp) > i_interval);
         bool hasPlayers = (s_players.length > 0);
@@ -113,9 +106,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         // block.timestap - lastblock timestamp ) > interval;
     }
 
-    function performUpkeep(
-        bytes calldata /* performData */
-    ) external override {
+    function performUpkeep(bytes calldata /* performData */) external override {
         (bool upkeepNeeded, ) = checkUpkeep("");
         // require(upkeepNeeded, "Upkeep not needed");
         if (!upkeepNeeded) {
@@ -137,7 +128,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     }
 
     function fulfillRandomWords(
-        uint256, /*requestId*/
+        uint256 /*requestId*/,
         uint256[] memory randomWords
     ) internal override {
         uint256 indexOfWinner = randomWords[0] % s_players.length; // get index of winner

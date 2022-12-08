@@ -1,14 +1,12 @@
-const { network } = require("hardhat");
-const { developmentChains } = require ("../helper-hardahat-config")
+const { network } = require("hardhat")
+const { developmentChains } = require("../helper-hardahat-config")
 
-module.exports = async function ({ getNamedAccounts, deployments}) {
-    const {deploy, log} = deployments
-    const {deployer} = await get getNamedAccounts()
+module.exports = async function ({ getNamedAccounts, deployments }) {
+    const { deploy, log } = deployments
+    const { deployer } = await getNamedAccounts()
 
-    if (developmentChains.includes(network.name)) {
-
-    }
-
+    // if (developmentChains.includes(network.name)) {
+    // }
 
     const raffle = await deploy("Raffle", {
         from: deployer,
