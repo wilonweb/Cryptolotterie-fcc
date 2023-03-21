@@ -77,8 +77,10 @@ hh test --grep "you don't pay enough".
 CF Doc [ETH-Waffle](https://ethereum-waffle.readthedocs.io/en/latest/matchers.html?highlight=event#emitting-events)
 
 Nous testons une fonction pour nous assurer qu'elle émet un evenement et la syntaxe sera tres similaire à celle que nous utilison pour verifier si une erreur est déclenché.
+
 Pour émettre des événements, nous pouvons utiliser "await expect to emit", suivi de l'événement que nous attendons.
-ous disons donc que le contrat raffle doit émettre un événement d'entrée de loterie. Nous pouvons copier ce code et l'exécuter dans notre terminal en utilisant "hard hat. Test --grep".
+
+nous disons donc que le contrat raffle doit émettre un événement d'entrée de loterie. Nous pouvons copier ce code et l'exécuter dans notre terminal en utilisant "hard hat. Test --grep".
 Et nous lançon le test avec :
 `hh test --grep "emits event on enter"`
 
@@ -87,3 +89,13 @@ it("emits event on enter", async function () {
     await expect(raffle.enterRaffle({ value: RaffleEntraceFee })).to.emit(raffle, "RaffleEnter")
 })
 ```
+
+## Raffle.sol unit Tests Continued ([15:32:45](https://www.youtube.com/watch?v=gyMwXuJrbJQ&t=43200s)):
+
+Dans cet partie on vas tester la lotterie pour s'assurer que personne ne puisse entrer dans la loterie lorsqu'elle est fermé ou entrain de calculé un resultant.
+
+On verifie a l'aide d'une fonction asynchrone si la lotterie est entrain de calculer un resultat et si c'est le cas on la ferme.
+
+Puis on la passe ouverte.
+
+On dois également simulter l'action d'un reseaux de gestionnaire pour appeler cette fonction au bon moment.
