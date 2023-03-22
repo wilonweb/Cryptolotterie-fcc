@@ -99,3 +99,5 @@ On verifie a l'aide d'une fonction asynchrone si la lotterie est entrain de calc
 Puis on la passe ouverte.
 
 On dois également simulter l'action d'un reseaux de gestionnaire pour appeler cette fonction au bon moment.
+
+## Hardhat Methods & "Time Travel" ([15:37:10](https://youtu.be/gyMwXuJrbJQ?t=56229)):
