@@ -100,4 +100,73 @@ Puis on la passe ouverte.
 
 On dois également simulter l'action d'un reseaux de gestionnaire pour appeler cette fonction au bon moment.
 
-## Hardhat Methods & "Time Travel" ([15:37:10](https://youtu.be/gyMwXuJrbJQ?t=56229)):
+### Hardhat Methods & "Time Travel" ([15:32:45](https://youtu.be/gyMwXuJrbJQ?t=55965)):
+
+Comment manipuler la blockchain dans un environnement de test
+
+waffle read the doc : emitting event
+
+hardhat network reference ( hardhat documentation) -> JSON RPC methods
+
+hardhatnetwork methods
+
+si on lance la commande `hh coverage`
+
+#### Question
+
+C'est quoi les JSON RPC methods ?
+a quoi sert la hardhat network methods ?  
+A quoi sert la commande hh coverage ?
+
+### Raffle.sol Unit Tests Continued II [15:37:10](https://youtu.be/gyMwXuJrbJQ?t=56230)
+
+On test la fonction checkUpKeep qui renvoi false si des personnes on recu une notificiation.
+Cette fonction est testé en simulant un temps d'attente et une opération de minage.
+
+#### Question
+
+##### A quoi sert la function checkUpKepp ?
+
+### Callstatic [15:38:22](https://youtu.be/gyMwXuJrbJQ?t=56302)
+
+callStatic permet de simuler l'envoi d'une transaction dans notre environnement de test.  
+Ainsi, au lieu de "raffle.check upkeep", nous pouvons faire "raffle.call static (check upkeep)" pour obtenir le résultat de "upkeep needed". Nous pouvons ensuite extraire la valeur de "upkeep needed" de cette réponse et la stocker dans une constante. Ensuite, nous pouvons vérifier que "upkeep needed" est "not false" en utilisant la fonction "assert". Si "upkeep needed" était vrai, alors "assert not false" serait faux et cela provoquerait une erreur.
+
+### Raffle.sol Unit Tests Continued III [15:40:00](https://youtu.be/gyMwXuJrbJQ?t=56401)
+
+On test les fonctionalité checkUpkeep et perforUpkeep
+
+#### 1 Vérification du calcul de l'état de la loterie :
+
+-   Utilisation de la fonction asynchrone "raffle.getRaffleState()" pour récupérer l'état actuel de la loterie.
+-   Utilisation de la fonction asynchrone "raffle.callStatic.checkUpkeep()" pour vérifier si la maintenance est nécessaire.
+-   Utilisation de l'instruction "assert.equal()" pour comparer la valeur retournée par "getRaffleState()" à la valeur attendue.
+
+#### 2 Vérification de la fonction "checkUpkeep()":
+
+-   Utilisation de la fonction asynchrone "raffle.callStatic.checkUpkeep()" pour vérifier si la maintenance est nécessaire.
+-   Utilisation de l'instruction "assert.equal()" pour comparer la valeur retournée à la valeur attendue.
+-   Vérification de la fonction "performUpkeep()":
+-   Vérification que la fonction "performUpkeep()" ne peut être exécutée que si "checkUpkeep()" renvoie true.
+-   Utilisation de la fonction asynchrone "raffle.enter()" pour entrer dans la loterie.
+-   Utilisation de l'instruction "await network.provider.send()" pour avancer le temps de la blockchain et passer en mode "calculating".
+-   Utilisation de la fonction asynchrone "raffle.performUpkeep()" pour effectuer la maintenance de la loterie.
+-   Utilisation de l'instruction "assert()" pour vérifier que la transaction de maintenance a été effectuée avec succès.
+
+#### Question
+
+#### A quoi sert checkUpkeep() ?
+
+Verifie si les joueur on les ressource nécéssaire pour payer l'entretien
+
+##### A quoi sert la fonction raffle.performUpkeep ?
+
+Verifie que les participant garde le droit d'effectuer l'action a laquel il ont le droit dans la lotterie comme reclamer leur gain.
+
+##### A quoi sert l'instruction network.provider.send ?
+
+Envoie une demande a un noeud ethereum pour effectuer une operation sur le reseaux avec un objet JSON-RPC en entré et renvoi une eéponse sous forme de promesse
+
+#### C'est quoi un objet JSON-RPC ?
+
+### Massive Promis Test [15:52:11](https://youtu.be/gyMwXuJrbJQ?t=57131)
