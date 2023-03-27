@@ -169,4 +169,74 @@ Envoie une demande a un noeud ethereum pour effectuer une operation sur le resea
 
 #### C'est quoi un objet JSON-RPC ?
 
+Un objet JSON RPC (Remote Procedure Call) est différent d'un objet JSON standard.
+
+JSON (JavaScript Object Notation) est un format de données utilisé pour échanger des informations structurées entre différents systèmes. Il est généralement utilisé pour transmettre des données entre un serveur et un client dans des applications web.
+
+JSON RPC, quant à lui, est un protocole de communication basé sur JSON qui permet à une application de demander l'exécution d'une procédure à distance sur un serveur. Il utilise une structure JSON pour spécifier les paramètres d'une méthode à exécuter sur le serveur et pour renvoyer les résultats de cette méthode au client.
+
+Ainsi, un objet JSON RPC est une structure de données JSON qui suit les spécifications du protocole JSON RPC, tandis qu'un objet JSON standard peut être utilisé pour stocker n'importe quel type de données structurées.
+
 ### Massive Promis Test [15:52:11](https://youtu.be/gyMwXuJrbJQ?t=57131)
+
+Le test vérifie que le gagnat de la lotterie réinitilialise la lotterie et envoie l'argent.
+
+#### Voici les différentes etapes :
+
+-   Ajout de nouveaux entrants : Le test commence par l'ajout de plusieurs nouveaux entrants à la loterie. Cette étape permet de s'assurer que le contrat est capable de gérer plusieurs joueurs simultanément.
+
+-   Envoi de fonds : Les nouveaux entrants envoient des fonds pour participer à la loterie. Cette étape permet de vérifier que le contrat est capable de collecter des fonds et de gérer les transactions.
+
+-   Tirage au sort : Une fois que tous les joueurs ont participé, le contrat doit effectuer un tirage au sort aléatoire pour désigner un gagnant. Cette étape permet de vérifier que le contrat fonctionne correctement en termes de logique métier.
+
+-   Enregistrement du gagnant : Une fois le gagnant désigné, le contrat doit enregistrer le résultat du tirage au sort. Cette étape permet de vérifier que le contrat est capable de stocker des données et de les récupérer ultérieurement.
+
+-   Remise à zéro de la loterie : Après avoir enregistré le gagnant, le contrat doit remettre à zéro la loterie pour permettre de nouveaux joueurs de participer. Cette étape permet de vérifier que le contrat est capable de réinitialiser son état interne.
+
+-   Maintenance du contrat : Enfin, le test doit simuler la maintenance du contrat en appelant certaines fonctions qui effectuent des opérations de maintenance, telles que la mise à jour des informations de prix ou la vérification des données externes. Cette étape permet de s'assurer que le contrat est capable de gérer les tâches de maintenance nécessaires pour son bon fonctionnement.
+
+```javascript
+it("picks a winner, resets the lottery, and sends money", async function () {
+    const additionalEntrants = 3
+    const staringAccountIndex = 1 // deployer = 0
+    const accounts = await ethers.getSigners()
+    for (let i = startingAccountIndex; i < staringAccountIndex + additionalEntrants; i++) {
+        const accountConnectedRaffle = raffle.connect(accounts[i])
+        await accountConnectedRaffle.enterRaffle({ value: raffleEntranceFee })
+    }
+    const startingSimeStamp = await raffle.getLatestTimeStamp()
+
+    // perfomUpkeep ( mock being chainLink keepers)
+    // fullfillRandomWords ( mock being the chainLinkURL )
+    // We will have to wait for the fullfillRandomWords to be called
+    await new Promise(async (resolve, reject) => {
+        raffle.once("WinnerPicked", () async => {})
+        console.log("Found the event")
+        try {
+            const recentWinner = await raffle.getRecentWinner()
+            console.log(recentWinner)
+            console.log(accounts[2])
+            console.log(accounts[1])
+            console.log(accounts[0])
+            console.log(accounts[3])
+
+            const raffleState = await raffle.getRaffleState()
+            const endingTimeStamp = await raffle.getLatestTimeStamp()
+            const numPlayers = await raffle.getNumberOfPlayers()
+            assert.equal(numPlayers.toString(), "0")
+            assert.equal(raffleState.toString(), "0")
+            assert(endingTimeStamp > startingTimeStamp)
+        } catch (e) {
+            reject(e)
+        }
+        resolve()
+    })
+    // Setting up the listener
+    // below we will first the event and the listener will pick it up, and resolve
+    const tx = await raffle.performUpkeet([])
+    const txReceipt = await tx.wait(1)
+    await vrfCoordinatorV2Mock.fulfillRandomWords(txReceipt.event[1].arg.requestId, raffle.address)
+})
+```
+
+### Let's fix my spelling errors & Run Test[16:02:32](https://youtu.be/gyMwXuJrbJQ?t=57752)
