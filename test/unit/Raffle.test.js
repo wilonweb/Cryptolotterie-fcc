@@ -132,17 +132,29 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                           console.log("Found the event")
                           try {
                               console.log(recentWinner)
-                              console.log(accounts[2])
-                              console.log(accounts[1])
-                              console.log(accounts[0])
-                              console.log(accounts[3])
+                              console.log(accounts[2].address)
+                              console.log(accounts[1].address)
+                              console.log(accounts[0].address)
+                              console.log(accounts[3].address)
                               const recentWinner = await raffle.getRecentWinner()
                               const raffleState = await raffle.getRaffleState()
                               const endingTimeStamp = await raffle.getLastTimeStamp()
                               const numPlayers = await raffle.getNumberOfPlayers()
+                              const winnerEndingBalance = await accounts[1].getBalance()
+
                               assert.equal(numPlayers.toString(), "0")
                               assert.equal(raffleState.toString(), "0")
                               assert(endingTimeStamp > startingTimeStamp)
+
+                              assert.equal(
+                                  winnerEndingBalance.toString(),
+                                  winnerStartingBalance.add(
+                                      raffleEntranceFee
+                                          .mul(additionalEntrants)
+                                          .add(raffleEntranceFee)
+                                          .toString()
+                                  )
+                              )
                           } catch (e) {
                               reject(e)
                           }
@@ -152,6 +164,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                       // below we will first the event and the listener will pick it up, and resolve
                       const tx = await raffle.performUpkeet([])
                       const txReceipt = await tx.wait(1)
+                      const winnerStartingBalance = await accounts[1].getBalance()
                       await vrfCoordinatorV2Mock.fulfillRandomWords(
                           txReceipt.event[1].arg.requestId,
                           raffle.address

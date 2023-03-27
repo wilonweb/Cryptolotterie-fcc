@@ -240,3 +240,19 @@ it("picks a winner, resets the lottery, and sends money", async function () {
 ```
 
 ### Let's fix my spelling errors & Run Test[16:02:32](https://youtu.be/gyMwXuJrbJQ?t=57752)
+
+Re copier coller le code car il ya des erreur .
+Et reparer le test pour voir le winner
+
+Le script commence par ajouter des participants à la loterie, avant de lancer une fonction qui va sélectionner un gagnant au hasard.
+Et une fois que le gagnant est selectionné la fonction verifie que le gagnant a recu le prix correspondant
+
+Voici les étape :
+
+-   Faire participer plusieurs personnes à la loterie
+-   Appeler la fonction **performUpkeep** pour mettre à jour l'état de la loterie
+-   Appeler la fonction **fulfillRandomness** pour générer un nombre aléatoire et sélectionner un gagnant
+-   Vérifier que le solde du gagnant a été mis à jour correctement en fonction du nombre d'entrées et du montant de l'entrée
+-   Réinitialiser l'état de la loterie pour pouvoir effectuer d'autres tests
+
+### Raffle.sol Unit Tests continuer IV[16:07:24](https://www.youtube.com/watch?v=gyMwXuJrbJQ)
