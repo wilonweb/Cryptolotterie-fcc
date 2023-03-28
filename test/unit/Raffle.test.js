@@ -37,7 +37,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                   assert.equal(playerFromContract, deployer)
               })
               it("emits event on enter", async function () {
-                  await expect(raffle.enterRaffle({ value: RaffleEntraceFee })).to.emit(
+                  await expect(raffle.enterRaffle({ value: raffleEntranceFee })).to.emit(
                       raffle,
                       "RaffleEnter"
                   )
@@ -48,7 +48,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
                   await network.provider.send("evm_mine", [])
                   // We Pretend to be a Chainlink Keeper
                   await raffle.performUpKeep([])
-                  await expect(raffle.enterRaffle({ value: raffleEntraceFee })).to.be.revertedWith(
+                  await expect(raffle.enterRaffle({ value: raffleEntranceFee })).to.be.revertedWith(
                       "Raffle__NotOpen"
                   )
               })
