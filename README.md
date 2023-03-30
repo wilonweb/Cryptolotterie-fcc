@@ -1,5 +1,8 @@
 # Cryptolotterie-fcc
 
+[sommaire](https://github.com/smartcontractkit/full-blockchain-solidity-course-js)
+[Question]https://github.com/smartcontractkit/full-blockchain-solidity-course-js/discussions
+
 ## Les notes
 
 ### 15.10.46 Deploying Raffle.sol Continued
@@ -255,4 +258,8 @@ Voici les étape :
 -   Vérifier que le solde du gagnant a été mis à jour correctement en fonction du nombre d'entrées et du montant de l'entrée
 -   Réinitialiser l'état de la loterie pour pouvoir effectuer d'autres tests
 
-### Raffle.sol Unit Tests continuer IV[16:07:24](https://www.youtube.com/watch?v=gyMwXuJrbJQ)
+### Raffle.sol Unit Tests continuer IV[16:07:24](https://youtu.be/gyMwXuJrbJQ?t=58045)
+
+## Mes liens
+
+[crypto-lottery-repo](https://github.com/Willy-Bottega/Cryptolotterie-fcc)
