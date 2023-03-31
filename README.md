@@ -258,7 +258,9 @@ Voici les étape :
 -   Vérifier que le solde du gagnant a été mis à jour correctement en fonction du nombre d'entrées et du montant de l'entrée
 -   Réinitialiser l'état de la loterie pour pouvoir effectuer d'autres tests
 
-### Raffle.sol Unit Tests continuer IV[16:07:24](https://youtu.be/gyMwXuJrbJQ?t=58045)
+### Raffle.sol Unit Tests continuer IV [16:07:24](https://youtu.be/gyMwXuJrbJQ?t=58045)
+
+### Raffle.sol Staging tests
 
 ## Mes liens
 
