@@ -260,7 +260,19 @@ Voici les étape :
 
 ### Raffle.sol Unit Tests continuer IV [16:07:24](https://youtu.be/gyMwXuJrbJQ?t=58045)
 
+faire le hh test pour voir si l'unit test est passé.
+
 ### Raffle.sol Staging tests
+
+Dans cette partie du tutoriel, nous allons parler de la création d'un test de mise en scène en utilisant des termes en anglais. Un test de mise en scène est similaire à un test unitaire, mais il est utilisé pour simuler des conditions réelles sur un réseau de test. Nous allons créer un nouveau test appelé "raffle.staging.test.js" pour cela.
+
+Nous allons commencer par copier une partie du code de notre test de raffle existant et l'ajuster selon nos besoins. Dans ce test de mise en scène, nous n'aurons pas besoin de simuler le coordinateur VRF de Chainlink car nous sommes sur un véritable réseau de test. Nous devrons également tenir compte des frais d'entrée à la raffle, du déploiement et de l'ID de chaîne.
+
+Il est important de noter que nos tests unitaires doivent être exécutés uniquement sur un réseau local, tandis que nos tests de mise en scène doivent être exécutés uniquement sur un réseau de test. Pour cela, nous allons vérifier le type de réseau sur lequel nous sommes avant d'exécuter chaque test.
+
+En résumé, nous allons créer un test de mise en scène qui simule des conditions réelles sur un réseau de test. Nous allons copier une partie du code de notre test existant, ajuster les éléments nécessaires et le placer dans un nouveau fichier. Nous allons également veiller à exécuter nos tests unitaires uniquement sur un réseau local et nos tests de mise en scène uniquement sur un réseau de test.
+
+### Testing on a TestNet[16.18.18](https://youtu.be/gyMwXuJrbJQ?t=58698)
 
 ## Mes liens
 
